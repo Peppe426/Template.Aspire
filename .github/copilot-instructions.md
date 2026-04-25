@@ -11,11 +11,12 @@
 
 ## High-level architecture
 
-- `src\Template.Aspire.slnx` is the main solution entrypoint. It currently includes the Aspire AppHost, the shared service defaults project, and the shared test project.
+- `src\Template.Aspire.slnx` is the main solution entrypoint. It currently includes the sample API service, the Aspire AppHost, the shared service defaults project, and the shared test project.
 - `src\aspire.config.json` points Aspire tooling at `Template.Aspire.AppHost`.
 - `src\Template.Aspire.AppHost\AppHost.cs` is the orchestration boundary. Add distributed resource registrations there and keep it focused on composition and startup.
+- `src\Template.ApiService` is a minimal API service wired through the AppHost and shared defaults so the template orchestrates a real service on first run.
 - `src\Template.Aspire.ServiceDefaults\Extensions.cs` is the shared infrastructure layer for service projects. It centralizes OpenTelemetry logging, metrics, tracing, default health checks, service discovery, and standard HTTP resilience.
-- `src\Tests\Tests.Core` is the shared test project. It uses NUnit and FluentAssertions and is ready to host tests even though no test classes are checked in yet.
+- `src\Tests\Tests.Core` is the shared test project. It uses NUnit and FluentAssertions and currently includes baseline tests covering the shared service defaults behavior.
 
 ## Key conventions
 
@@ -27,6 +28,7 @@
 - Keep `FluentAssertions` pinned only in `src\Tests\Tests.Core\Tests.Core.csproj`; other test projects should reference `Tests.Core` instead of adding a direct `FluentAssertions` package reference.
 - All current projects target `net10.0` with nullable reference types and implicit usings enabled. Keep new projects aligned with that baseline unless there is a deliberate reason to diverge.
 - Use Semantic Versioning for package and release numbers. Package versions should be `<major>.<minor>.<patch>`, and GitHub release tags should be `v<major>.<minor>.<patch>`.
+- Keep the template package version in `.template.config\Template.Aspire.TemplatePackage.csproj` as the manual source of truth. When cutting a release, bump that `<Version>` value first, then create the matching Git tag and GitHub release using the same number with a `v` prefix.
 
 ## Layered instructions
 

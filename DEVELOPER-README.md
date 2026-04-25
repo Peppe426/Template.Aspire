@@ -44,6 +44,7 @@ Use **Semantic Versioning** for both template package versions and GitHub releas
 
 - NuGet package versions should use `<major>.<minor>.<patch>`, for example `1.0.0`.
 - Git tags and GitHub releases should use `v<major>.<minor>.<patch>`, for example `v1.0.0`.
+- The manual source of truth is `.template.config\Template.Aspire.TemplatePackage.csproj`. Bump its `<Version>` value first, then create the matching Git tag and GitHub release with the same number plus the `v` prefix.
 
 ## Publish the template package
 

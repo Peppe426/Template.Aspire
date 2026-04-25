@@ -46,12 +46,21 @@ The intended workflow is to define behavior first with `create-acceptance-test`,
 
 ## Publishing a GitHub release
 
-This repository uses **Semantic Versioning**. Create GitHub releases from tags in the format `v<major>.<minor>.<patch>`, for example `v1.0.0`.
+This repository uses **Semantic Versioning**. The manual source of truth is `.template.config\Template.Aspire.TemplatePackage.csproj`, where the template package `<Version>` should be set to `<major>.<minor>.<patch>`, for example `1.1.0`.
+
+Git tags and GitHub releases must use that same version with a `v` prefix, for example `v1.1.0`.
 
 ```powershell
-git tag -a v1.0.0 -m "v1.0.0"
-git push origin v1.0.0
-gh release create v1.0.0 --generate-notes
+dotnet pack .template.config\Template.Aspire.TemplatePackage.csproj -c Release -o artifacts\packages
+git tag -a v1.1.0 -m "v1.1.0"
+git push origin v1.1.0
+gh release create v1.1.0 artifacts\packages\Peppe426.Template.Aspire.SolutionTemplate.1.1.0.nupkg --generate-notes
 ```
+
+In practice:
+
+1. Update `.template.config\Template.Aspire.TemplatePackage.csproj` to the next package version.
+2. Pack the template so the `.nupkg` name matches that version.
+3. Create the matching Git tag and GitHub release with the same version plus the `v` prefix.
 
 If you prefer the GitHub web UI, push the tag first and then create a release from **Releases** using the same version tag.
