@@ -1,20 +1,28 @@
 # Template
 
-A .NET Aspire solution starter with the AppHost, a sample API service, shared service defaults, shared test infrastructure, and repository Copilot instructions already wired in.
+A .NET Aspire starter solution with a working AppHost, a sample API service, shared service defaults, shared tests, and Copilot guidance already wired in.
 
 [![Latest release](https://img.shields.io/github/v/release/Peppe426/Template.Aspire?display_name=tag)](https://github.com/Peppe426/Template.Aspire/releases/latest)
 
-## Solution contents
+## What you get
 
-- `src\Template.Aspire.slnx` is the main solution entrypoint.
-- `src\Template.Aspire.AppHost` hosts the Aspire orchestration boundary.
-- `src\Template.ApiService` is a minimal API service wired through the AppHost and shared defaults.
-- `src\Template.Aspire.ServiceDefaults` centralizes service discovery, resilience, health checks, and OpenTelemetry defaults.
-- `src\Tests\Tests.Core` provides the shared NUnit and FluentAssertions test stack plus baseline tests for the shared defaults.
-- `.github\copilot-instructions.md` and `.github\instructions\*` carry the repository guidance used by Copilot.
-- `.github\skills\*` contains repository-specific Copilot skills for acceptance-criteria-driven workflows.
+- `src\Template.Aspire.slnx` as the main solution entrypoint
+- `src\Template.Aspire.AppHost` to orchestrate local development
+- `src\Template.ApiService` as a minimal API service you can replace or extend
+- `src\Template.Aspire.ServiceDefaults` for health checks, service discovery, resilience, and telemetry defaults
+- `src\Tests\Tests.Core` for the shared NUnit and FluentAssertions test setup
+- `.github\copilot-instructions.md`, `.github\instructions\*`, and `.github\skills\*` to guide day-to-day Copilot usage
 
-## Getting started
+## Get started with the template
+
+Install the template and scaffold a new solution:
+
+```powershell
+dotnet new install .
+dotnet new template-aspire -n Contoso -o C:\temp\Contoso
+```
+
+Then open the generated solution and run the usual development loop:
 
 ```powershell
 dotnet build src\Template.Aspire.slnx
@@ -22,50 +30,34 @@ dotnet test src\Tests\Tests.Core\Tests.Core.csproj
 dotnet run --project src\Template.Aspire.AppHost\Template.Aspire.AppHost.csproj
 ```
 
-Running the AppHost now starts the sample API service. The service exposes:
+The AppHost starts the sample API service. In development, the sample service exposes:
 
 - `/` for a simple JSON response
-- `/health` and `/alive` in development through `MapDefaultEndpoints()`
+- `/health` and `/alive` through `MapDefaultEndpoints()`
 
-## Copilot skills
+## Working with the skills
 
-This repository currently includes three custom Copilot skills under `.github\skills`.
+The template ships with three custom Copilot skills under `.github\skills`. A practical day-to-day flow looks like this:
 
-| Skill | What it does | When to use it |
+| Goal | Skill | Example prompt |
 | --- | --- | --- |
-| `create-acceptance-test` | Guides an interactive BDD conversation and turns the result into business-facing acceptance criteria written in Markdown with Gherkin-style scenarios. | Use this when you want to discover behavior, clarify edge cases, and document acceptance tests before any coding starts. |
-| `implement-acceptance-criteria` | Takes an existing acceptance-criteria document and drives implementation work from it, including tests, slice boundaries, domain language, and required wiring. | Use this when the behavior is already agreed and you want Copilot to implement a focused vertical slice from that acceptance criteria. |
-| `deploy-release` | Regenerates JSON changelog files for each tagged release from Conventional Commit history, then packs and publishes the real release build to GitHub Releases. | Use this when you want Copilot to prepare a release, rebuild changelog history, or publish the real package for a tagged version. |
+| Clarify behavior before coding | `create-acceptance-test` | `Create acceptance tests for customer registration` |
+| Implement the agreed behavior | `implement-acceptance-criteria` | `Implement the acceptance criteria for order submission` |
+| Cut or refresh a tagged release | `deploy-release` | `Deploy release v1.2.0` |
 
-Typical prompts:
+The usual rhythm is:
 
-- `Create acceptance tests for customer registration`
-- `Write BDD scenarios for invoice approval`
-- `Implement the acceptance criteria for order submission`
-- `Deploy release v1.2.0`
+1. Start with `create-acceptance-test` when the behavior is still fuzzy.
+2. Move to `implement-acceptance-criteria` once the scenarios are agreed.
+3. Use normal build, test, and AppHost runs while you iterate.
+4. Use `deploy-release` only when you are ready to publish a tagged version.
 
-The intended workflow is to define behavior first with `create-acceptance-test`, then move to implementation with `implement-acceptance-criteria`.
+If you want a simple default prompt sequence, use:
 
-## Publishing a GitHub release
+1. `Create acceptance tests for <feature>`
+2. `Implement the acceptance criteria for <feature>`
+3. `Deploy release v<major>.<minor>.<patch>`
 
-This repository uses **Semantic Versioning**. The manual source of truth is `.template.config\Template.Aspire.TemplatePackage.csproj`, where the template package `<Version>` should be set to `<major>.<minor>.<patch>`, for example `1.1.0`.
+## Maintainer note
 
-Git tags and GitHub releases must use that same version with a `v` prefix, for example `v1.1.0`.
-
-The `deploy-release` skill regenerates `docs\changelog\v<version>.json` files for each tagged release and the root `docs\changelog\changelog.json` index, which tracks `latestProduction` and `latestReleaseCandidatesByStage`, before packaging and publishing the real `.nupkg`.
-
-```powershell
-dotnet pack .template.config\Template.Aspire.TemplatePackage.csproj -c Release -o artifacts\packages
-git tag -a v1.1.0 -m "v1.1.0"
-git push origin v1.1.0
-gh release create v1.1.0 artifacts\packages\Peppe426.Template.Aspire.SolutionTemplate.1.1.0.nupkg --generate-notes
-```
-
-In practice:
-
-1. Update `.template.config\Template.Aspire.TemplatePackage.csproj` to the next package version.
-2. Regenerate `docs\changelog` so each tagged release has a current JSON changelog.
-3. Pack the template so the `.nupkg` name matches that version.
-4. Create the matching Git tag and GitHub release with the same version plus the `v` prefix.
-
-If you prefer the GitHub web UI, push the tag first and then create a release from **Releases** using the same version tag.
+This README is meant to stay focused on getting started. For packing, versioning, and release details for the template repository itself, use `DEVELOPER-README.md`.
