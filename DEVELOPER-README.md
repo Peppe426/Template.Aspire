@@ -35,12 +35,19 @@ Create a distributable `.nupkg` from the template package project:
 dotnet pack .template.config\Template.Aspire.TemplatePackage.csproj -c Release -o artifacts\packages
 ```
 
+## Versioning
+
+Use **Semantic Versioning** for both template package versions and GitHub releases.
+
+- NuGet package versions should use `<major>.<minor>.<patch>`, for example `1.0.0`.
+- Git tags and GitHub releases should use `v<major>.<minor>.<patch>`, for example `v1.0.0`.
+
 ## Publish the template package
 
 Push the generated package to the target NuGet feed:
 
 ```powershell
-dotnet nuget push artifacts\packages\Peppe426.Template.Aspire.SolutionTemplate.<version>.nupkg --source <feed-url> --api-key <api-key>
+dotnet nuget push artifacts\packages\Peppe426.Template.Aspire.SolutionTemplate.<major>.<minor>.<patch>.nupkg --source <feed-url> --api-key <api-key>
 ```
 
 ## Validate the packaged template
@@ -48,7 +55,7 @@ dotnet nuget push artifacts\packages\Peppe426.Template.Aspire.SolutionTemplate.<
 Install the packed `.nupkg` and scaffold a throwaway instance:
 
 ```powershell
-dotnet new install artifacts\packages\Peppe426.Template.Aspire.SolutionTemplate.<version>.nupkg
+dotnet new install artifacts\packages\Peppe426.Template.Aspire.SolutionTemplate.<major>.<minor>.<patch>.nupkg
 dotnet new template-aspire -n Contoso -o C:\temp\Contoso
 dotnet new uninstall Peppe426.Template.Aspire.SolutionTemplate
 ```

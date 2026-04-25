@@ -26,6 +26,7 @@
 - `Tests.Core` currently provides `NUnit.Framework` as a global using for its own source files.
 - Keep `FluentAssertions` pinned only in `src\Tests\Tests.Core\Tests.Core.csproj`; other test projects should reference `Tests.Core` instead of adding a direct `FluentAssertions` package reference.
 - All current projects target `net10.0` with nullable reference types and implicit usings enabled. Keep new projects aligned with that baseline unless there is a deliberate reason to diverge.
+- Use Semantic Versioning for package and release numbers. Package versions should be `<major>.<minor>.<patch>`, and GitHub release tags should be `v<major>.<minor>.<patch>`.
 
 ## Layered instructions
 

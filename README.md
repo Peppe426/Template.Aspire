@@ -40,12 +40,12 @@ The intended workflow is to define behavior first with `create-acceptance-test`,
 
 ## Publishing a GitHub release
 
-Use a semantic version tag and publish the release from that tag.
+This repository uses **Semantic Versioning**. Create GitHub releases from tags in the format `v<major>.<minor>.<patch>`, for example `v1.0.0`.
 
 ```powershell
-git tag -a v0.1.0 -m "v0.1.0"
-git push origin v0.1.0
-gh release create v0.1.0 --generate-notes
+git tag -a v1.0.0 -m "v1.0.0"
+git push origin v1.0.0
+gh release create v1.0.0 --generate-notes
 ```
 
 If you prefer the GitHub web UI, push the tag first and then create a release from **Releases** using the same version tag.
