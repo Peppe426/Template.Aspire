@@ -1,0 +1,10 @@
+{
+  "latestProduction": {
+    "version": "v1.1.0",
+    "releaseDate": "2026-04-25T09:26:06+02:00",
+    "packageVersion": "1.1.0",
+    "changelogFile": "v1.1.0.json",
+    "summary": "Feature-focused release with 1 feat. Key changes: add sample api service template."
+  },
+  "latestReleaseCandidatesByStage": {}
+}

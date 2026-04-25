@@ -56,17 +56,17 @@ dotnet nuget push artifacts\packages\Peppe426.Template.Aspire.SolutionTemplate.<
 
 ## Release changelog and deployment skill
 
-Use the deployment skill companion PowerShell module to regenerate the release changelog JSON files under `docs\changelog`:
+Use the deployment skill companion PowerShell module to regenerate the release changelog JSON files under `docs\changelog`, including the root `docs\changelog\changelog.json` index that tracks `latestProduction` and `latestReleaseCandidatesByStage`:
 
 ```powershell
-Import-Module .github\skills\deploy-release\ReleaseDeployment.psm1 -Force
+Import-Module .\.github\skills\deploy-release\ReleaseDeployment.psm1 -Force
 Invoke-ReleaseDeployment
 ```
 
 To publish the real packaged build to GitHub for an existing tag:
 
 ```powershell
-Import-Module .github\skills\deploy-release\ReleaseDeployment.psm1 -Force
+Import-Module .\.github\skills\deploy-release\ReleaseDeployment.psm1 -Force
 Invoke-ReleaseDeployment -ReleaseVersion v<major>.<minor>.<patch> -PublishToGitHub
 ```
 

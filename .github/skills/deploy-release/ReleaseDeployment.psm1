@@ -16,6 +16,10 @@ $script:StandardCommitTypes = @(
     'other'
 )
 
+$script:ProductionReleaseTagPattern = '^v\d+\.\d+\.\d+$'
+$script:ReleaseCandidateTagPattern = '^v\d+\.\d+\.\d+\.rc-\d+$'
+$script:SupportedReleaseTagPattern = '^v\d+\.\d+\.\d+(?:\.rc-\d+)?$'
+
 function Invoke-ToolCommand {
     [CmdletBinding()]
     param(
@@ -88,8 +92,30 @@ function Get-ReleaseTags {
     return @(
         $result.Output |
             ForEach-Object { $_.Trim() } |
-            Where-Object { $_ -match '^v\d+\.\d+\.\d+$' }
+            Where-Object { $_ -match $script:SupportedReleaseTagPattern }
     )
+}
+
+function Test-ProductionReleaseTag {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Tag
+    )
+
+    return $Tag -match $script:ProductionReleaseTagPattern
+}
+
+function Test-ReleaseCandidateTag {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Tag
+    )
+
+    return $Tag -match $script:ReleaseCandidateTagPattern
 }
 
 function Get-ReleaseDate {
@@ -348,6 +374,87 @@ function Get-ReleaseSummary {
     return "$focus with $mix. Key changes: $($highlights -join '; ')."
 }
 
+function Get-ScopeCounts {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNull()]
+        [object[]]$Commits
+    )
+
+    $counts = [ordered]@{}
+
+    foreach ($commit in $Commits) {
+        $scope = "$($commit.scope)".Trim()
+
+        if ([string]::IsNullOrWhiteSpace($scope)) {
+            continue
+        }
+
+        if (-not $counts.Contains($scope)) {
+            $counts[$scope] = 0
+        }
+
+        $counts[$scope]++
+    }
+
+    return $counts
+}
+
+function Get-ReleaseStageKey {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNull()]
+        [object[]]$Commits
+    )
+
+    $scopeCounts = Get-ScopeCounts -Commits $Commits
+    $rankedScopes = @(
+        $scopeCounts.GetEnumerator() |
+            Sort-Object -Property @{ Expression = 'Value'; Descending = $true }, @{ Expression = 'Name'; Descending = $false }
+    )
+
+    if ($rankedScopes.Count -eq 0) {
+        return 'unspecified'
+    }
+
+    return "$($rankedScopes[0].Name)"
+}
+
+function New-ChangelogIndexEntry {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Tag,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$ReleaseDate,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$PackageVersion,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$ChangelogFileName,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Summary
+    )
+
+    return [ordered]@{
+        version = $Tag
+        releaseDate = $ReleaseDate
+        packageVersion = $PackageVersion
+        changelogFile = $ChangelogFileName
+        summary = $Summary
+    }
+}
+
 function Write-JsonFile {
     [CmdletBinding()]
     param(
@@ -388,17 +495,17 @@ function Invoke-ReleaseDeployment {
     Generates JSON changelog files for tagged releases and optionally publishes the real release package to GitHub.
 
     .EXAMPLE
-    Import-Module .github\skills\deploy-release\ReleaseDeployment.psm1 -Force
+    Import-Module .\.github\skills\deploy-release\ReleaseDeployment.psm1 -Force
     Invoke-ReleaseDeployment
 
     .EXAMPLE
-    Import-Module .github\skills\deploy-release\ReleaseDeployment.psm1 -Force
+    Import-Module .\.github\skills\deploy-release\ReleaseDeployment.psm1 -Force
     Invoke-ReleaseDeployment -ReleaseVersion 'v1.1.0' -PublishToGitHub
     #>
     [CmdletBinding(SupportsShouldProcess)]
     param(
         [Parameter()]
-        [ValidatePattern('^v\d+\.\d+\.\d+$')]
+        [ValidatePattern('^v\d+\.\d+\.\d+(?:\.rc-\d+)?$')]
         [string]$ReleaseVersion,
 
         [Parameter()]
@@ -423,18 +530,24 @@ function Invoke-ReleaseDeployment {
         $packageMetadata = Get-PackageMetadata -ProjectPath $packageProjectPath
         $targetReleaseTag = if ([string]::IsNullOrWhiteSpace($ReleaseVersion)) { $packageMetadata.Tag } else { $ReleaseVersion }
         $releaseTags = @(Get-ReleaseTags)
+        $changelogIndexFilePath = Join-Path $changelogDirectoryPath 'changelog.json'
 
         if ($releaseTags.Count -eq 0) {
-            throw 'No SemVer release tags were found in the repository.'
+            throw 'No supported release tags were found in the repository.'
         }
 
         $generatedFiles = [System.Collections.Generic.List[string]]::new()
+        $changelogIndex = [ordered]@{
+            latestProduction = $null
+            latestReleaseCandidatesByStage = [ordered]@{}
+        }
         $previousTag = $null
 
         foreach ($tag in $releaseTags) {
             $commits = @(Get-ReleaseCommits -Tag $tag -PreviousTag $previousTag)
             $typeCounts = Get-TypeCounts -Commits $commits
             $artifactVersion = $tag.TrimStart('v')
+            $changelogFileName = "$tag.json"
             $changelog = [ordered]@{
                 version = $tag
                 releaseDate = Get-ReleaseDate -Tag $tag
@@ -455,11 +568,26 @@ function Invoke-ReleaseDeployment {
                 commits = @($commits)
             }
 
-            $changelogFilePath = Join-Path $changelogDirectoryPath "$tag.json"
+            $changelogFilePath = Join-Path $changelogDirectoryPath $changelogFileName
             Write-JsonFile -FilePath $changelogFilePath -Value $changelog
             $generatedFiles.Add($changelogFilePath)
+
+            $indexEntry = New-ChangelogIndexEntry -Tag $tag -ReleaseDate $changelog.releaseDate -PackageVersion $artifactVersion -ChangelogFileName $changelogFileName -Summary $changelog.summary
+
+            if (Test-ProductionReleaseTag -Tag $tag) {
+                $changelogIndex.latestProduction = $indexEntry
+            }
+            elseif (Test-ReleaseCandidateTag -Tag $tag) {
+                $stageKey = Get-ReleaseStageKey -Commits $commits
+                $indexEntry.stage = $stageKey
+                $changelogIndex.latestReleaseCandidatesByStage[$stageKey] = $indexEntry
+            }
+
             $previousTag = $tag
         }
+
+        Write-JsonFile -FilePath $changelogIndexFilePath -Value $changelogIndex
+        $generatedFiles.Add($changelogIndexFilePath)
 
         $packagePath = $null
 

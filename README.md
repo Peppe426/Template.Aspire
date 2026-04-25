@@ -52,7 +52,7 @@ This repository uses **Semantic Versioning**. The manual source of truth is `.te
 
 Git tags and GitHub releases must use that same version with a `v` prefix, for example `v1.1.0`.
 
-The `deploy-release` skill regenerates `docs\changelog\v<version>.json` files for each tagged release from Conventional Commit history before packaging and publishing the real `.nupkg`.
+The `deploy-release` skill regenerates `docs\changelog\v<version>.json` files for each tagged release and the root `docs\changelog\changelog.json` index, which tracks `latestProduction` and `latestReleaseCandidatesByStage`, before packaging and publishing the real `.nupkg`.
 
 ```powershell
 dotnet pack .template.config\Template.Aspire.TemplatePackage.csproj -c Release -o artifacts\packages
