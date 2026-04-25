@@ -1,0 +1,164 @@
+{
+  "version": "v1.0.0",
+  "releaseDate": "2026-04-25T08:18:30+02:00",
+  "range": {
+    "from": null,
+    "to": "v1.0.0"
+  },
+  "artifact": {
+    "packageId": "Peppe426.Template.Aspire.SolutionTemplate",
+    "packageVersion": "1.0.0",
+    "fileName": "Peppe426.Template.Aspire.SolutionTemplate.1.0.0.nupkg"
+  },
+  "summary": "Documentation-focused release with 6 docs, 3 other, 2 feat, 1 chore, 1 init. Key changes: add shared service defaults project; add Aspire solution template package; add test structure and conventions guide.",
+  "commitTotal": 13,
+  "conventionalCommitTotal": 10,
+  "breakingChangeTotal": 0,
+  "typeCounts": {
+    "feat": 2,
+    "fix": 0,
+    "docs": 6,
+    "chore": 1,
+    "refactor": 0,
+    "test": 0,
+    "perf": 0,
+    "build": 0,
+    "ci": 0,
+    "style": 0,
+    "revert": 0,
+    "other": 3,
+    "init": 1
+  },
+  "commits": [
+    {
+      "sha": "55742ce111b007d9de286fabfe27d23d2ef7b84f",
+      "shortSha": "55742ce",
+      "subject": "Initial commit",
+      "type": "other",
+      "scope": null,
+      "isBreakingChange": false,
+      "isConventional": false,
+      "description": "Initial commit"
+    },
+    {
+      "sha": "48ce83cb5b8ad169dd796b24cba99320f25fc08a",
+      "shortSha": "48ce83c",
+      "subject": "docs: add test structure and conventions guide",
+      "type": "docs",
+      "scope": null,
+      "isBreakingChange": false,
+      "isConventional": true,
+      "description": "add test structure and conventions guide"
+    },
+    {
+      "sha": "8af12c2736b49393c5d6fbec7865bbc3e6e697b2",
+      "shortSha": "8af12c2",
+      "subject": "init(apphost): scaffold Aspire AppHost project setup",
+      "type": "init",
+      "scope": "apphost",
+      "isBreakingChange": false,
+      "isConventional": true,
+      "description": "scaffold Aspire AppHost project setup"
+    },
+    {
+      "sha": "67e3f5108c7b827d55b23f62b50e2303f99ea1f5",
+      "shortSha": "67e3f51",
+      "subject": "chore(tests): add Tests.Core.csproj for shared test setup",
+      "type": "chore",
+      "scope": "tests",
+      "isBreakingChange": false,
+      "isConventional": true,
+      "description": "add Tests.Core.csproj for shared test setup"
+    },
+    {
+      "sha": "833450069158d00a7437149ad24dc15b458a17ef",
+      "shortSha": "8334500",
+      "subject": "feat(stage-1): add shared service defaults project",
+      "type": "feat",
+      "scope": "stage-1",
+      "isBreakingChange": false,
+      "isConventional": true,
+      "description": "add shared service defaults project"
+    },
+    {
+      "sha": "125c23489999b677cfe705830b881852ec004e28",
+      "shortSha": "125c234",
+      "subject": "add aspire.config.json with AppHost project path",
+      "type": "other",
+      "scope": null,
+      "isBreakingChange": false,
+      "isConventional": false,
+      "description": "add aspire.config.json with AppHost project path"
+    },
+    {
+      "sha": "4367f814588cdb4fcbc7bf09e17104d68c30649c",
+      "shortSha": "4367f81",
+      "subject": "feat(template): add Aspire solution template package",
+      "type": "feat",
+      "scope": "template",
+      "isBreakingChange": false,
+      "isConventional": true,
+      "description": "add Aspire solution template package"
+    },
+    {
+      "sha": "a2b0ad057724a93624496d98499fc48ef1e86c76",
+      "shortSha": "a2b0ad0",
+      "subject": "improve .gitignore for build outputs and VS6 files",
+      "type": "other",
+      "scope": null,
+      "isBreakingChange": false,
+      "isConventional": false,
+      "description": "improve .gitignore for build outputs and VS6 files"
+    },
+    {
+      "sha": "6796447ce5abd156c2acda7f4adbd2692ab8a1fc",
+      "shortSha": "6796447",
+      "subject": "docs: add developer README for template maintainers",
+      "type": "docs",
+      "scope": null,
+      "isBreakingChange": false,
+      "isConventional": true,
+      "description": "add developer README for template maintainers"
+    },
+    {
+      "sha": "1c7039a99b4a456219f56a0d38498ce601ba6897",
+      "shortSha": "1c7039a",
+      "subject": "docs: update README with solution overview and usage",
+      "type": "docs",
+      "scope": null,
+      "isBreakingChange": false,
+      "isConventional": true,
+      "description": "update README with solution overview and usage"
+    },
+    {
+      "sha": "2e3dfdf077b709c0df1443adffd7698093f861ae",
+      "shortSha": "2e3dfdf",
+      "subject": "docs: add layered instructions and acceptance test skills",
+      "type": "docs",
+      "scope": null,
+      "isBreakingChange": false,
+      "isConventional": true,
+      "description": "add layered instructions and acceptance test skills"
+    },
+    {
+      "sha": "7db4001c64c6516feee3c1a0437a097c40a31361",
+      "shortSha": "7db4001",
+      "subject": "docs(readme): add Copilot skills and release instructions",
+      "type": "docs",
+      "scope": "readme",
+      "isBreakingChange": false,
+      "isConventional": true,
+      "description": "add Copilot skills and release instructions"
+    },
+    {
+      "sha": "4abbee68f176ea40eacfc3cc1701f1b852097618",
+      "shortSha": "4abbee6",
+      "subject": "docs(release): document semantic versioning",
+      "type": "docs",
+      "scope": "release",
+      "isBreakingChange": false,
+      "isConventional": true,
+      "description": "document semantic versioning"
+    }
+  ]
+}

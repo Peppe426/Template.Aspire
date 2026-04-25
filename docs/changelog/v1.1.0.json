@@ -1,0 +1,43 @@
+{
+  "version": "v1.1.0",
+  "releaseDate": "2026-04-25T09:26:06+02:00",
+  "range": {
+    "from": "v1.0.0",
+    "to": "v1.1.0"
+  },
+  "artifact": {
+    "packageId": "Peppe426.Template.Aspire.SolutionTemplate",
+    "packageVersion": "1.1.0",
+    "fileName": "Peppe426.Template.Aspire.SolutionTemplate.1.1.0.nupkg"
+  },
+  "summary": "Feature-focused release with 1 feat. Key changes: add sample api service template.",
+  "commitTotal": 1,
+  "conventionalCommitTotal": 1,
+  "breakingChangeTotal": 0,
+  "typeCounts": {
+    "feat": 1,
+    "fix": 0,
+    "docs": 0,
+    "chore": 0,
+    "refactor": 0,
+    "test": 0,
+    "perf": 0,
+    "build": 0,
+    "ci": 0,
+    "style": 0,
+    "revert": 0,
+    "other": 0
+  },
+  "commits": [
+    {
+      "sha": "c910b1ce960aba7f09570df7957df67c6472813e",
+      "shortSha": "c910b1c",
+      "subject": "feat(stage-1): add sample api service template",
+      "type": "feat",
+      "scope": "stage-1",
+      "isBreakingChange": false,
+      "isConventional": true,
+      "description": "add sample api service template"
+    }
+  ]
+}
