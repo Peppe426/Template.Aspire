@@ -54,6 +54,24 @@ Push the generated package to the target NuGet feed:
 dotnet nuget push artifacts\packages\Peppe426.Template.Aspire.SolutionTemplate.<major>.<minor>.<patch>.nupkg --source <feed-url> --api-key <api-key>
 ```
 
+## Release changelog and deployment skill
+
+Use the deployment skill companion PowerShell module to regenerate the release changelog JSON files under `docs\changelog`:
+
+```powershell
+Import-Module .github\skills\deploy-release\ReleaseDeployment.psm1 -Force
+Invoke-ReleaseDeployment
+```
+
+To publish the real packaged build to GitHub for an existing tag:
+
+```powershell
+Import-Module .github\skills\deploy-release\ReleaseDeployment.psm1 -Force
+Invoke-ReleaseDeployment -ReleaseVersion v<major>.<minor>.<patch> -PublishToGitHub
+```
+
+The `docs\changelog` files are maintainer artifacts for this repository's release history and are excluded from generated solutions created from the template.
+
 ## Validate the packaged template
 
 Install the packed `.nupkg` and scaffold a throwaway instance:
