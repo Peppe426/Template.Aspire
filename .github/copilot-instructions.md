@@ -17,6 +17,7 @@
 - `src\Template.ApiService` is a minimal API service wired through the AppHost and shared defaults so the template orchestrates a real service on first run.
 - `src\Template.Aspire.ServiceDefaults\Extensions.cs` is the shared infrastructure layer for service projects. It centralizes OpenTelemetry logging, metrics, tracing, default health checks, service discovery, and standard HTTP resilience.
 - `src\Tests\Tests.Core` is the shared test project. It uses NUnit and FluentAssertions and currently includes baseline tests covering the shared service defaults behavior.
+- `docs\changelog` stores maintainer-facing JSON changelogs per release version. Those files describe this repository's release history and should not be treated as generated-solution content.
 
 ## Key conventions
 
@@ -29,6 +30,7 @@
 - All current projects target `net10.0` with nullable reference types and implicit usings enabled. Keep new projects aligned with that baseline unless there is a deliberate reason to diverge.
 - Use Semantic Versioning for package and release numbers. Package versions should be `<major>.<minor>.<patch>`, and GitHub release tags should be `v<major>.<minor>.<patch>`.
 - Keep the template package version in `.template.config\Template.Aspire.TemplatePackage.csproj` as the manual source of truth. When cutting a release, bump that `<Version>` value first, then create the matching Git tag and GitHub release using the same number with a `v` prefix.
+- The deployment workflow lives under `.github\skills\deploy-release`. Its companion PowerShell module regenerates `docs\changelog\*.json` from Conventional Commit history and can publish the real packaged build to GitHub Releases.
 
 ## Layered instructions
 
