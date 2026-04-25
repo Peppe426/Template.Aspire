@@ -2,6 +2,7 @@
   <Folder Name="/Tests/">
     <Project Path="Tests/Tests.Core/Tests.Core.csproj" Id="68be2c79-721b-4d26-abd2-3466a8bce036" />
   </Folder>
+  <Project Path="Template.ApiService/Template.ApiService.csproj" />
   <Project Path="Template.Aspire.AppHost/Template.Aspire.AppHost.csproj" />
   <Project Path="Template.Aspire.ServiceDefaults/Template.Aspire.ServiceDefaults.csproj" />
 </Solution>

@@ -7,10 +7,10 @@
     <NoDefaultExcludes>true</NoDefaultExcludes>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageId>Peppe426.Template.Aspire.SolutionTemplate</PackageId>
-    <Version>0.1.0</Version>
+    <Version>1.1.0</Version>
     <Authors>Peppe426</Authors>
     <Title>Template Aspire solution</Title>
-    <Description>Creates a .NET Aspire starter solution with shared service defaults, shared test infrastructure, and repository Copilot instructions.</Description>
+    <Description>Creates a .NET Aspire starter solution with a sample API service, shared service defaults, shared test infrastructure, and repository Copilot instructions.</Description>
     <PackageTags>dotnet-new;template;aspire;nunit;copilot</PackageTags>
     <PackageType>Template</PackageType>
     <NoWarn>$(NoWarn);NU5128</NoWarn>

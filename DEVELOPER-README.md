@@ -3,6 +3,7 @@
 This file is for template maintainers only. It is intentionally **not** included in generated solutions.
 
 The template output is controlled by `.template.config\template.json`, which only includes `.github`, `.gitignore`, `README.md`, `docs`, and `src`.
+The generated solution now includes a minimal API service under `src\Template.ApiService` so the AppHost orchestrates a real project on first run.
 
 ## Build the repository
 
@@ -10,6 +11,8 @@ The template output is controlled by `.template.config\template.json`, which onl
 dotnet build src\Template.Aspire.slnx
 dotnet test src\Tests\Tests.Core\Tests.Core.csproj
 ```
+
+The test project now exercises the shared service defaults, so `dotnet test` validates actual repository behavior instead of discovering zero tests.
 
 ## Install and test the template locally
 

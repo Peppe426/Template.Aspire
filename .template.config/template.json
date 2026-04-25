@@ -10,7 +10,7 @@
   "identity": "Peppe426.Template.Aspire.SolutionTemplate",
   "name": "Template Aspire solution",
   "shortName": "template-aspire",
-  "description": "Creates a .NET Aspire starter solution with the AppHost, shared service defaults, shared test infrastructure, and repository Copilot instructions.",
+  "description": "Creates a .NET Aspire starter solution with the AppHost, a sample API service, shared service defaults, shared test infrastructure, and repository Copilot instructions.",
   "sourceName": "Template",
   "preferNameDirectory": true,
   "tags": {

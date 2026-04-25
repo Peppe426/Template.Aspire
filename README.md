@@ -1,6 +1,6 @@
 # Template
 
-A .NET Aspire solution starter with the AppHost, shared service defaults, shared test infrastructure, and repository Copilot instructions already wired in.
+A .NET Aspire solution starter with the AppHost, a sample API service, shared service defaults, shared test infrastructure, and repository Copilot instructions already wired in.
 
 [![Latest release](https://img.shields.io/github/v/release/Peppe426/Template.Aspire?display_name=tag)](https://github.com/Peppe426/Template.Aspire/releases/latest)
 
@@ -8,8 +8,9 @@ A .NET Aspire solution starter with the AppHost, shared service defaults, shared
 
 - `src\Template.Aspire.slnx` is the main solution entrypoint.
 - `src\Template.Aspire.AppHost` hosts the Aspire orchestration boundary.
+- `src\Template.ApiService` is a minimal API service wired through the AppHost and shared defaults.
 - `src\Template.Aspire.ServiceDefaults` centralizes service discovery, resilience, health checks, and OpenTelemetry defaults.
-- `src\Tests\Tests.Core` provides the shared NUnit and FluentAssertions test stack.
+- `src\Tests\Tests.Core` provides the shared NUnit and FluentAssertions test stack plus baseline tests for the shared defaults.
 - `.github\copilot-instructions.md` and `.github\instructions\*` carry the repository guidance used by Copilot.
 - `.github\skills\*` contains repository-specific Copilot skills for acceptance-criteria-driven workflows.
 
@@ -20,6 +21,11 @@ dotnet build src\Template.Aspire.slnx
 dotnet test src\Tests\Tests.Core\Tests.Core.csproj
 dotnet run --project src\Template.Aspire.AppHost\Template.Aspire.AppHost.csproj
 ```
+
+Running the AppHost now starts the sample API service. The service exposes:
+
+- `/` for a simple JSON response
+- `/health` and `/alive` in development through `MapDefaultEndpoints()`
 
 ## Copilot skills
 
