@@ -21,7 +21,10 @@
     <Content Include="..\README.md" Pack="true" PackagePath="content\" />
     <Content Include="..\.gitignore" Pack="true" PackagePath="content\" />
     <Content Include="..\.github\**\*" Pack="true" PackagePath="content\.github\%(RecursiveDir)%(Filename)%(Extension)" />
-    <Content Include="..\docs\**\*" Pack="true" PackagePath="content\docs\%(RecursiveDir)%(Filename)%(Extension)" />
+    <Content Include="..\docs\**\*"
+             Exclude="..\docs\changelog\**\*"
+             Pack="true"
+             PackagePath="content\docs\%(RecursiveDir)%(Filename)%(Extension)" />
     <Content Include="..\src\**\*"
              Exclude="..\src\.vs\**\*;..\src\**\bin\**\*;..\src\**\obj\**\*;..\src\**\*.rsuser;..\src\**\*.sln.docstates;..\src\**\*.suo;..\src\**\*.user;..\src\**\*.userosscache"
              Pack="true"
