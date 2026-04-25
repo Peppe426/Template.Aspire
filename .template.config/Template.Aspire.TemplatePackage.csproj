@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NoDefaultExcludes>true</NoDefaultExcludes>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <PackageId>Peppe426.Template.Aspire.SolutionTemplate</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Peppe426</Authors>
+    <Title>Template Aspire solution</Title>
+    <Description>Creates a .NET Aspire starter solution with shared service defaults, shared test infrastructure, and repository Copilot instructions.</Description>
+    <PackageTags>dotnet-new;template;aspire;nunit;copilot</PackageTags>
+    <PackageType>Template</PackageType>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="template.json" Pack="true" PackagePath="content\.template.config\" />
+    <Content Include="..\README.md" Pack="true" PackagePath="content\" />
+    <Content Include="..\.gitignore" Pack="true" PackagePath="content\" />
+    <Content Include="..\.github\**\*" Pack="true" PackagePath="content\.github\%(RecursiveDir)%(Filename)%(Extension)" />
+    <Content Include="..\docs\**\*" Pack="true" PackagePath="content\docs\%(RecursiveDir)%(Filename)%(Extension)" />
+    <Content Include="..\src\**\*"
+             Exclude="..\src\.vs\**\*;..\src\**\bin\**\*;..\src\**\obj\**\*;..\src\**\*.rsuser;..\src\**\*.sln.docstates;..\src\**\*.suo;..\src\**\*.user;..\src\**\*.userosscache"
+             Pack="true"
+             PackagePath="content\src\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+</Project>

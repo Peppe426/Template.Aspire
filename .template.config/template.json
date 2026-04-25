@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Peppe426",
+  "classifications": [
+    ".NET Aspire",
+    "Solution",
+    "NUnit",
+    "GitHub Copilot"
+  ],
+  "identity": "Peppe426.Template.Aspire.SolutionTemplate",
+  "name": "Template Aspire solution",
+  "shortName": "template-aspire",
+  "description": "Creates a .NET Aspire starter solution with the AppHost, shared service defaults, shared test infrastructure, and repository Copilot instructions.",
+  "sourceName": "Template",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "solution"
+  },
+  "guids": [
+    "aedb857d-4efc-4a41-a772-05ef9efebcc4",
+    "68be2c79-721b-4d26-abd2-3466a8bce036"
+  ],
+  "sources": [
+    {
+      "include": [
+        ".github/**/*",
+        ".gitignore",
+        "README.md",
+        "docs/**/*",
+        "src/**/*"
+      ],
+      "exclude": [
+        "DEVELOPER-README.md",
+        "**/.vs/**",
+        "**/[Bb]in/**",
+        "**/[Oo]bj/**",
+        "**/*.rsuser",
+        "**/*.sln.docstates",
+        "**/*.suo",
+        "**/*.user",
+        "**/*.userosscache"
+      ]
+    }
+  ]
+}
